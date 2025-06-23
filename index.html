@@ -50,6 +50,12 @@
       audio {
         max-width: 100%;
       }
+      video {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        }
     </style>
   </head>
   <body style="margin: 0; overflow: hidden">
@@ -72,7 +78,7 @@
         Your browser does not support the video tag.
       </video>
     </div>
-
+<a-video src="#my-video" width="2" height="1.125" position="0 0 0"></a-video> 
     <div class="content-box" id="audioBox">
       <audio id="audioPlayer" controls>
         <source src="static/KetIndo1.mp3" type="audio/mp3" />
