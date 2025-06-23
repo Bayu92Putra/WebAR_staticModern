@@ -114,11 +114,10 @@
         if (type === 'audio') {
           audioVisible = !audioVisible;
           audioBox.style.display = audioVisible ? "block" : "none";
-          if (audioVisible) {
-            audio1.play(); audio2.play();
-          } else {
-            audio1.pause(); audio2.pause();
-          }
+          if (!audioVisible) {
+            audio1.pause();
+            audio2.pause();
+          } 
         }
 
         if (type === 'text') {
