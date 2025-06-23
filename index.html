@@ -9,10 +9,10 @@
     <style>
       .menu-container {
         position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 30px;
+        left: 20px;
         display: flex;
+        flex-direction: column;
         gap: 1em;
         z-index: 10;
       }
@@ -50,12 +50,6 @@
       audio {
         max-width: 100%;
       }
-      video {
-        aspect-ratio: 16 / 9;
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        }
     </style>
   </head>
   <body style="margin: 0; overflow: hidden">
@@ -78,7 +72,7 @@
         Your browser does not support the video tag.
       </video>
     </div>
-<a-video src="#my-video" width="2" height="1.125" position="0 0 0"></a-video> 
+
     <div class="content-box" id="audioBox">
       <audio id="audioPlayer" controls>
         <source src="static/KetIndo1.mp3" type="audio/mp3" />
@@ -99,20 +93,39 @@
     </div>
 
     <script>
+      let videoVisible = false;
+      let audioVisible = false;
+      let textVisible = false;
+
       function showContent(type) {
-        document.getElementById("videoBox").style.display = "none";
-        document.getElementById("audioBox").style.display = "none";
-        document.getElementById("textBox").style.display = "none";
-        document.getElementById(type + "Box").style.display = "block";
+        const videoBox = document.getElementById("videoBox");
+        const audioBox = document.getElementById("audioBox");
+        const textBox = document.getElementById("textBox");
+        const video = document.getElementById("videoPlayer");
+        const audio1 = document.getElementById("audioPlayer");
+        const audio2 = document.getElementById("audioPlayer2");
+
+        if (type === 'video') {
+          videoVisible = !videoVisible;
+          videoBox.style.display = videoVisible ? "block" : "none";
+          videoVisible ? video.play() : video.pause();
+        }
+
+        if (type === 'audio') {
+          audioVisible = !audioVisible;
+          audioBox.style.display = audioVisible ? "block" : "none";
+          if (audioVisible) {
+            audio1.play(); audio2.play();
+          } else {
+            audio1.pause(); audio2.pause();
+          }
+        }
+
+        if (type === 'text') {
+          textVisible = !textVisible;
+          textBox.style.display = textVisible ? "block" : "none";
+        }
       }
-      // Penyesuaian rasio video otomatis
-  window.addEventListener("load", () => {
-    const videoPlayer = document.getElementById("videoPlayer");
-    videoPlayer.addEventListener("loadedmetadata", function () {
-      const ratio = videoPlayer.videoHeight / videoPlayer.videoWidth;
-      videoPlayer.style.height = `${videoPlayer.clientWidth * ratio}px`;
-    });
-  });
     </script>
   </body>
 </html>
