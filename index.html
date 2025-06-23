@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WebAR Statis</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.2.1/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      .menu-container {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1em;
+        z-index: 10;
+      }
+
+      .menu-button {
+        padding: 0.6em 1.2em;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .menu-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .content-box {
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+        padding: 1em;
+        border-radius: 10px;
+        display: none;
+        z-index: 10;
+        max-width: 90vw;
+      }
+
+      video,
+      audio {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; overflow: hidden">
+    <a-scene embedded arjs>
+      <a-marker preset="hiro">
+        <a-box position="0 0.5 0" color="#4CC3D9"></a-box>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <div class="menu-container">
+      <button class="menu-button" onclick="showContent('video')">🎥 Video</button>
+      <button class="menu-button" onclick="showContent('audio')">🔊 Audio</button>
+      <button class="menu-button" onclick="showContent('text')">📄 Teks</button>
+    </div>
+
+    <div class="content-box" id="videoBox">
+      <video id="videoPlayer" controls>
+        <source src="static/Bisyarat1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="content-box" id="audioBox">
+      <audio id="audioPlayer" controls>
+        <source src="static/KetIndo1.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+      <br /><br />
+      <audio id="audioPlayer2" controls>
+        <source src="static/KetInggris1.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <div class="content-box" id="textBox">
+      <h3>Keterangan Artefak</h3>
+      <p>
+        Lempeng Emas Peripih Candi Kimpulan merupakan salah satu dari benda cagar budaya di Kabupaten Sleman sesuai dengan penetapan dari Kemendikbudristek. Lempeng ini ditemukan di dalam wadah batu di bawah struktur candi, dan bertuliskan aksara Sansekerta kuno.
+      </p>
+    </div>
+
+    <script>
+      function showContent(type) {
+        document.getElementById("videoBox").style.display = "none";
+        document.getElementById("audioBox").style.display = "none";
+        document.getElementById("textBox").style.display = "none";
+        document.getElementById(type + "Box").style.display = "block";
+      }
+    </script>
+  </body>
+</html>
