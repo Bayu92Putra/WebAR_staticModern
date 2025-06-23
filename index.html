@@ -105,6 +105,14 @@
         document.getElementById("textBox").style.display = "none";
         document.getElementById(type + "Box").style.display = "block";
       }
+      // Penyesuaian rasio video otomatis
+  window.addEventListener("load", () => {
+    const videoPlayer = document.getElementById("videoPlayer");
+    videoPlayer.addEventListener("loadedmetadata", function () {
+      const ratio = videoPlayer.videoHeight / videoPlayer.videoWidth;
+      videoPlayer.style.height = `${videoPlayer.clientWidth * ratio}px`;
+    });
+  });
     </script>
   </body>
 </html>
