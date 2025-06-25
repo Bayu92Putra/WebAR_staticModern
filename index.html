@@ -16,7 +16,7 @@
           <a-image id="btn-audio" src="#noteIcon" position="-1.5 0.5 0" class="button" onclick="showContent('audio')"></a-image>
           <a-image id="btn-text" src="#textIcon" position="-1.5 -0.5 0" class="button" onclick="showContent('text')"></a-image>
 
-          <a-video id="video" src="#videoAsset" width="4" height="2.25" position="0 1 0" visible="false"></a-video>
+          <a-video id="video" src="#videoAsset" width="2.56" height="1.44" position="0 1 0" visible="false"></a-video>
 
           <a-entity id="textBox" visible="false" position="0 1 0">
             <a-plane color="#000" height="2" width="4" opacity="0.7"></a-plane>
@@ -31,7 +31,7 @@
       </a-marker>
 
       <a-assets>
-        <video id="videoAsset" src="Bisyarat1.mp4" crossorigin="anonymous" preload="auto" playsinline></video>
+        <video id="videoAsset" src="Bisyarat1.mp4" crossorigin="anonymous" preload="auto" playsinline muted></video>
         <audio id="indoAudioAsset" src="KetIndo1.mp3"></audio>
         <audio id="engAudioAsset" src="KetInggris1.mp3"></audio>
         <img id="videoIcon" src="icons/video-icon.png">
