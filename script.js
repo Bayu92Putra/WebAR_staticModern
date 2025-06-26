@@ -1,3 +1,4 @@
+let texture = null;
 function showContent(type) {
   const videoEntity = document.querySelector('#video');
   const videoAsset = document.querySelector('#videoAsset');
@@ -17,9 +18,15 @@ function showContent(type) {
   if (engAudio?.components?.sound) engAudio.components.sound.stopSound();
 
   // Tampilkan dan mainkan sesuai type
-   if (type === 'video') {
-    videoEntity.setAttribute('visible', true);
-    videoAsset.play(); // play dari elemen DOM video, bukan dari mesh
+   if (type === 'video')  
+    if (!texture) {
+      texture = new THREE.VideoTexture(video);
+      videoPlane.getObject3D('mesh').material.map = texture;
+      videoPlane.getObject3D('mesh').material.needsUpdate = true;
+    }
+    videoPlane.setAttribute('visible', true);
+    videoPlane.emit('fadein');
+    video.play();
   }
 
   if (type === 'audio') {
