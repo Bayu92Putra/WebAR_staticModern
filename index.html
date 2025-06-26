@@ -3,63 +3,89 @@
 <html>
   <head>
     <title>WebAR Museum</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <link rel="stylesheet" href="style.css">
+     <style>
+      .fade-in {
+        animation: fadeIn 1s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam;">
-      <a-marker id="marker" preset="hiro">
-        
-          <a-entity id="ui" position="0 0 0">
-          <a-image id="btn-video" src="#videoIcon" position="-1.5 1.5 0" class="button" onclick="showContent('video')"></a-image>
-          <a-image id="btn-audio" src="#noteIcon" position="-1.5 0.5 0" class="button" onclick="showContent('audio')"></a-image>
-          <a-image id="btn-text" src="#textIcon" position="-1.5 -0.5 0" class="button" onclick="showContent('text')"></a-image>
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-assets>
+        <img id="iconVideo" src="assets/icons/video-icon.png">
+        <img id="ic <style>
+      .fade-in {
+        animation: fadeIn 1s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }onAudio" src="assets/icons/audio-icon.png">
+        <img id="iconText" src="assets/icons/text-icon.png">
+      </a-assets>
+      <a-marker type="pattern" url="pattern-marker.patt" id="marker">
+        <a-image id="btnVideo" src="#iconVideo" position="-1 0.4 0" rotation="-90 0 0" scale="0.4 0.4 0.4" class="clickable"></a-image>
+        <a-image id="btnAudio" src="#iconAudio" position="-1 0 0" rotation="-90 0 0" scale="0.4 0.4 0.4" class="clickable"></a-image>
+        <a-image id="btnText" src="#iconText" position="-1 -0.4 0" rotation="-90 0 0" scale="0.4 0.4 0.4" class="clickable"></a-image>
+ <!-- Video Frame (hidden initially) -->
+        <a-video id="videoContent" src="#" width="1.6" height="0.9" position="0 0 0" rotation="-90 0 0" visible="false"></a-video>
 
-          <a-plane id="videoPlane" width="2.56" height="1.44" position="0 0.75 0" rotation="-90 0 0"
-         visible="false"
-         material="shader: flat; opacity: 0"
-         animation__fadein="property: opacity; to: 1; dur: 500; startEvents: fadein"
-         animation__fadeout="property: opacity; to: 0; dur: 500; startEvents: fadeout">
-          </a-plane>
-          <a-entity id="textBox" visible="false" position="0 1 0">
-            <a-plane color="#000" height="2" width="4" opacity="0.7"></a-plane>
-            <a-text value="Lempeng Emas Peripih Candi Kimpulan merupakan salah satu benda cagar budaya..." width="3.8" align="center" color="#fff" position="0 0 0.01"></a-text>
-          </a-entity>
+        <!-- Audio (not autoplay) -->
+        <a-entity id="audioContent" sound="src: assets/audio/KetIndo1.mp3; autoplay: false; loop: false" visible="false"></a-entity>
 
-          <a-entity id="audioBox" visible="false">
-            <a-sound id="indoAudio" src="#indoAudioAsset" autoplay="false" position="0 0 0"></a-sound>
-            <a-sound id="engAudio" src="#engAudioAsset" autoplay="false" position="0 0 0"></a-sound>
-          </a-entity>
-        </a-entity>
+        <!-- Text Panel -->
+        <a-plane id="textContent" color="#fff" width="1.5" height="0.6" position="0 -0.3 0" rotation="-90 0 0" visible="false">
+          <a-text value="Deskripsi:
+Lempeng Emas Peripih
+Candi Kimpulan" color="#000" align="center" width="1.4" position="0 0 0.01"></a-text>
+        </a-plane>
       </a-marker>
 
-      <a-assets>
-        <video id="videoAsset" src="Bisyarat1.mp4" crossorigin="anonymous" playsinline muted loop style="display:none"></video>
-        <audio id="indoAudioAsset" src="KetIndo1.mp3"></audio>
-        <audio id="engAudioAsset" src="KetInggris1.mp3"></audio>
-        <img id="videoIcon" src="icons/video-icon.png">
-        <img id="noteIcon" src="icons/note-icon.png">
-        <img id="textIcon" src="icons/text-icon.png">
-      </a-assets>
       <a-entity camera></a-entity>
     </a-scene>
-    
+
     <script>
-  const marker = document.querySelector("#marker");
-  const uiContainer = document.querySelector(".ui-container");
+      const btnVideo = document.querySelector("#btnVideo");
+      const btnAudio = document.querySelector("#btnAudio");
+      const btnText = document.querySelector("#btnText");
 
-  marker.addEventListener("markerFound", () => {
-    console.log("Marker ditemukan");
-    uiContainer.style.display = "flex"; // atau pakai fade-in class
-  });
+      const video = document.querySelector("#videoContent");
+      const audio = document.querySelector("#audioContent");
+      const text = document.querySelector("#textContent");
 
-  marker.addEventListener("markerLost", () => {
-    console.log("Marker hilang");
-    uiContainer.style.display = "none"; // atau fade-out
-  });
-</script>
-    
+      btnVideo.addEventListener("click", () => {
+        video.setAttribute("visible", true);
+        video.setAttribute("src", "assets/video/Bisyarat1.mp4");
+        video.components.material.material.map.image.play();
+
+        btnVideo.setAttribute("visible", false);
+        btnAudio.setAttribute("visible", false);
+        btnText.setAttribute("visible", false);
+      });
+
+      btnAudio.addEventListener("click", () => {
+        audio.setAttribute("visible", true);
+        document.querySelector('[sound]').components.sound.playSound();
+
+        btnVideo.setAttribute("visible", false);
+        btnAudio.setAttribute("visible", false);
+        btnText.setAttribute("visible", false);
+      });
+
+      btnText.addEventListener("click", () => {
+        text.setAttribute("visible", true);
+
+        btnVideo.setAttribute("visible", false);
+        btnAudio.setAttribute("visible", false);
+        btnText.setAttribute("visible", false);
+      });
+    </script>
   </body>
 </html>
