@@ -17,8 +17,12 @@
           <a-image id="btn-audio" src="#noteIcon" position="-1.5 0.5 0" class="button" onclick="showContent('audio')"></a-image>
           <a-image id="btn-text" src="#textIcon" position="-1.5 -0.5 0" class="button" onclick="showContent('text')"></a-image>
 
-          <a-video id="video" src="#videoAsset" width="2.56" height="1.44" position="0 1 0" visible="false"></a-video>
-
+          <a-plane id="videoPlane" width="2.56" height="1.44" position="0 0.75 0" rotation="-90 0 0"
+         visible="false"
+         material="shader: flat; opacity: 0"
+         animation__fadein="property: opacity; to: 1; dur: 500; startEvents: fadein"
+         animation__fadeout="property: opacity; to: 0; dur: 500; startEvents: fadeout">
+          </a-plane>
           <a-entity id="textBox" visible="false" position="0 1 0">
             <a-plane color="#000" height="2" width="4" opacity="0.7"></a-plane>
             <a-text value="Lempeng Emas Peripih Candi Kimpulan merupakan salah satu benda cagar budaya..." width="3.8" align="center" color="#fff" position="0 0 0.01"></a-text>
@@ -32,7 +36,7 @@
       </a-marker>
 
       <a-assets>
-        <video id="videoAsset" src="Bisyarat1.mp4" crossorigin="anonymous" preload="auto" playsinline muted></video>
+        <video id="videoAsset" src="Bisyarat1.mp4" crossorigin="anonymous" playsinline muted loop style="display:none"></video>
         <audio id="indoAudioAsset" src="KetIndo1.mp3"></audio>
         <audio id="engAudioAsset" src="KetInggris1.mp3"></audio>
         <img id="videoIcon" src="icons/video-icon.png">
